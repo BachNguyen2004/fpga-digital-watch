@@ -6,7 +6,7 @@ This repository provides the starter code, automated testing infrastructure incl
 - **Currently only Assignment 1 is available.**
 - Version 1.1
 - Release Date: 27 April 2026
-- 
+- Hello
 
 ## Quick Start Checklist
 
