@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module up_down_counter #(
-    parameter int MAX   = 2,
+    parameter int MAX   = 2,  //Max value = 2, not 2 bits
     parameter int WIDTH = 2
 ) (
     input logic clk,
@@ -17,7 +17,7 @@ module up_down_counter #(
   logic [WIDTH-1:0] next_count;  //next count will be 2 bits length
 
   // Initialise counter to 0
-  initial count = '0;  //' to make sure the initial count = 0 
+  initial count = '0;  //' to make sure the initial count = 0
                        //will have exact number of bits you specified in the module
 
   // Next-state logic
