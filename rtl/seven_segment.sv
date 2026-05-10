@@ -47,6 +47,7 @@ module seven_segment #(
     end
   end
 
-  assign segments = (ACTIVE_LOW != 0) ? ~segments_active_high : segments_active_high;
+  assign segments = (ACTIVE_LOW != 0) ? ~segments_active_high : segments_active_high; //If active low = 1
+                                                                                      //inverse the bit, if not keep them unchange
 
 endmodule
