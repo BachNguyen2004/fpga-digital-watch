@@ -14,8 +14,8 @@
 module seven_segment #(
     parameter int ACTIVE_LOW = 1
 ) (
-    input  logic [3:0] digit,
-    input  logic       blank,
+    input logic [3:0] digit,  //4 bits values hence it shows from 0-15 correspond to 0 to F in hex
+    input logic blank,
     output logic [6:0] segments
 );
 
