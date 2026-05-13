@@ -9,18 +9,20 @@ module restartable_rate_generator #(
 );
 
   // Tick becomes high at end of cycle
-  logic tick_qualifier;
+  logic tick_qualifier;  //the counter has reached the tick point
 
-  logic running = 1'b0;
+  logic running = 1'b0;  //stored version of run
 
-  always_ff @(posedge clk) running <= run;
+  always_ff @(posedge clk)
+    running <= run;  //on eveery rising edge, running becomes the current value of run
 
-  assign tick = running && tick_qualifier;
+  assign tick = running && tick_qualifier;  //tick = 1 only when running and tick_qualifier = 1
 
   generate
     if (CYCLE_COUNT > 1) begin : g_general
 
-      localparam int CountWidth = $clog2(CYCLE_COUNT);
+      localparam int CountWidth = $clog2(CYCLE_COUNT);  //calculates how many bits the counter needs
+                                                        //eg: cycle_count = 8 then CountWidth = 3 bits
 
       logic rst_count;
       logic enable_count;
