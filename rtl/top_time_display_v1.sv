@@ -66,12 +66,10 @@ module top_time_display_v1 #(
 
   always_comb begin
     unique case (SW)
-
       2'b00: tick = tick_1hz;
       2'b01: tick = tick_25hz;
       2'b10: tick = tick_1khz;
       2'b11: tick = 1'b1;
-
     endcase
   end
 
