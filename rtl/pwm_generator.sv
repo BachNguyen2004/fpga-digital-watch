@@ -1,24 +1,21 @@
 `timescale 1ns / 1ps
 
 module pwm_generator #(
-
-    // Number of clock cycles in one PWM period
     parameter int PERIOD_CYCLES = 50_000_000,
-
-    // Number of clock cycles output is high
-    parameter int DUTY_CYCLES = 25_000_000
-
+    parameter int DUTY_CYCLES   = 25_000_000
 ) (
-
     input  logic clk,
     input  logic rst,
     output logic pwm_out
-
 );
 
   localparam int CountWidth = $clog2(PERIOD_CYCLES);
 
+  localparam int CompareWidth = CountWidth + 1;
+
   logic [CountWidth-1:0] count;
+
+  localparam logic [CompareWidth-1:0] DutyCycles = CompareWidth'(DUTY_CYCLES);
 
   mod_n_counter #(
       .N(PERIOD_CYCLES),
@@ -30,6 +27,6 @@ module pwm_generator #(
       .count(count)
   );
 
-  assign pwm_out = (count < CountWidth'(DUTY_CYCLES));
+  assign pwm_out = ({1'b0, count} < DutyCycles);
 
 endmodule
