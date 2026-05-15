@@ -11,7 +11,6 @@ module rising_edge_detector (
   logic prev = 1'b0;
   always_ff @(posedge clk) begin
     rise <= sig_in && !prev;
-
     prev <= sig_in;
   end
 
