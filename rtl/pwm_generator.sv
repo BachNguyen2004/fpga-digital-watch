@@ -9,12 +9,14 @@ module pwm_generator #(
     output logic pwm_out
 );
 
+  //Calculates how many bits required for the counter
   localparam int CountWidth = $clog2(PERIOD_CYCLES);
 
   localparam int CompareWidth = CountWidth + 1;
 
   logic [CountWidth-1:0] count;
 
+  //LHS: Size of DutyCycles, RHS: Values goes into DutyCycle, resized to that size
   localparam logic [CompareWidth-1:0] DutyCycles = CompareWidth'(DUTY_CYCLES);
 
   mod_n_counter #(
@@ -27,6 +29,7 @@ module pwm_generator #(
       .count(count)
   );
 
+  //{1'b0, count} -> adds one extra bit before comparison. Ensure DUTY_CYCLES bits not get cutoff when equals Period_Cycle
   assign pwm_out = ({1'b0, count} < DutyCycles);
 
 endmodule
