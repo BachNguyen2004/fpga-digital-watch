@@ -1,0 +1,66 @@
+`timescale 1ns / 1ps
+
+module edit_mode_selector #(
+    parameter int HOLD_CYCLES = 50_000_000
+) (
+    input  logic       clk,
+    input  logic       button,
+    output logic [2:0] mode_enable
+);
+
+  logic long_press;
+  logic press;
+
+  logic armed;
+  logic disarm;
+
+  logic reset_counter;
+  logic enable_counter;
+  logic [1:0] count;
+
+  //Long press detection
+  button_hold_pulse #(
+      .HOLD_CYCLES(HOLD_CYCLES)
+  ) u_hold_pulse (
+      .clk(clk),
+      .button(button),
+      .pulse(long_press)
+  );
+
+  //Normal press detection
+  rising_edge_detector u_detector (
+      .clk(clk),
+      .sig_in(button),
+      .rise(press)
+  );
+
+  //Armed latch
+  arming_latch u_latch (
+      .clk(clk),
+      .arm(long_press),
+      .disarm(disarm),
+      .armed(armed)
+  );
+
+  //Modulo-3 counter
+  mod_n_counter #(
+      .N(3),
+      .WIDTH(2)
+  ) u_mod_3_counter (
+      .clk(clk),
+      .rst(reset_counter),
+      .enable(enable_counter),
+      .count(count)
+  );
+
+  // The counter is only meaningful while edit mode is active.
+  assign reset_counter = !armed;
+  assign enable_counter = armed & press;
+
+  // The press that advances past hours exits edit mode.
+  assign disarm = enable_counter & (count == 2'd2);
+
+  // One-hot output: seconds, minutes, hours; otherwise no field selected.
+  assign mode_enable = armed ? (3'b001 << count) : 3'b000;
+
+endmodule
