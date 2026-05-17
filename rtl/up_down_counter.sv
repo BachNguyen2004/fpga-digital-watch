@@ -38,10 +38,12 @@ module up_down_counter #(
       end
     end
   end
+
   // State register
   always_ff @(posedge clk) begin
     if (enable) begin  //enable = 1 -> Count = Next count; enable = 0 -> count keeps old value
       count <= next_count;
     end
   end
+
 endmodule
