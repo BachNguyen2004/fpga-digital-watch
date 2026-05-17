@@ -74,7 +74,7 @@ module decimal_display_driver (
           .ones(ones)
       );
 
-      // Drive the matching HEX pair: even HEX is ones, odd HEX is tens.
+      // Drive the matching HEX pair: even HEX is ones (HEX0, HEX2,HEX4), odd HEX is tens (HEX1, HEX3, HEX5).
       seven_segment u_ones (
           .digit(ones),
           .blank(blank_a[i]),
