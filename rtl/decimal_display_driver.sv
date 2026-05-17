@@ -64,6 +64,7 @@ module decimal_display_driver (
   genvar i;
   generate
     for (i = 0; i < 3; i = i + 1) begin : g_digit_pair
+      // Split each 0-99 value into decimal tens and ones digits
       logic [3:0] tens;
       logic [3:0] ones;
 
@@ -73,6 +74,7 @@ module decimal_display_driver (
           .ones(ones)
       );
 
+      // Drive the matching HEX pair: even HEX is ones, odd HEX is tens.
       seven_segment u_ones (
           .digit(ones),
           .blank(blank_a[i]),
