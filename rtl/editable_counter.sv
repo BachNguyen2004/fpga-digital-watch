@@ -26,7 +26,7 @@ module editable_counter #(
       .count (count)
   );
 
-  wire inc_event = edit_mode && inc && !dec;  //Only happend in edit mode, 
+  wire inc_event = edit_mode && inc && !dec;  //Only happend in edit mode,
   wire dec_event = edit_mode && dec && !inc;  //
   wire tick_event = !edit_mode && tick;  //Only happend in normal mode, every tick increment the counter
 
